@@ -6,11 +6,6 @@ import { UsersModule } from './users/users.module';
   imports: [BookModule, UsersModule],
   controllers: [],
   providers: [],
-  exports: []
 })
 
-export class AppModule {
-  constructor() {
-    console.log("AppModule");
-}
-}
+export class AppModule { }
