@@ -9,9 +9,7 @@ export class BookMiddleware implements NestMiddleware {
         let url = req.originalUrl;
         let method = req.method;
         let date = new Date().toDateString();
-
         console.log(protocol + "://" + host + url + " " + method + " " + date);
         next()
     }
-
 }

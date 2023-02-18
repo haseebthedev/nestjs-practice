@@ -1,6 +1,7 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Put, UsePipes } from "@nestjs/common";
 import { BookService } from './book.service';
-import { Book } from "./data/book.dto";
+import { Book, createBookSchema } from "./dto/book.dto";
+import { JoiValidationPipe } from "./pipes/validation.pipe";
 
 @Controller("book")
 export class BookController {
@@ -23,6 +24,7 @@ export class BookController {
     }
 
     @Post("/add")
+    @UsePipes(new JoiValidationPipe(createBookSchema))
     addBook(@Body() book: Book): string {
         return this.bookService.addBookService(book)
     }
