@@ -1,24 +1,11 @@
 import { NestFactory } from '@nestjs/core';
-import { NextFunction, Request, Response } from 'express';
 import { AppModule } from './app.module';
-
-/**
- * This is a global middleware. We can declare global middleware only with functions.
- */
-function globalMiddlewareOne(req: Request, res: Response, next: NextFunction) {
-  console.log("This is the globalMiddleware number 1.");
-  next()
-}
-
-function globalMiddlewareTwo(req: Request, res: Response, next: NextFunction) {
-  console.log("This is the globalMiddleware number 2.");
-  next()
-}
+import { ErrorFilter } from './common/filters/Error.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.use(globalMiddlewareOne)
-  app.use(globalMiddlewareTwo)
+  /** Here you can also add middlewares functions. */
+  app.useGlobalFilters(new ErrorFilter());
   await app.listen(3000);
 }
 

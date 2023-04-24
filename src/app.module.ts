@@ -1,6 +1,7 @@
-import { Module } from '@nestjs/common';
-import { BookModule } from './book/book.module';
-import { UsersModule } from './users/users.module';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { BookModule } from './modules/book/book.module';
+import { UsersModule } from './modules/users/users.module';
+import { RequestLoggerMiddleware } from './common/middlewares/logger.middleware';
 
 @Module({
   imports: [BookModule, UsersModule],
@@ -8,4 +9,8 @@ import { UsersModule } from './users/users.module';
   providers: [],
 })
 
-export class AppModule { }
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(RequestLoggerMiddleware).forRoutes("*")
+  }
+ }
